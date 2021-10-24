@@ -10,6 +10,7 @@
 import numpy as np
 
 def convert_kg2id(datapath):
+    print("start converting kg...")
     entity2id = dict()
     relation2id = dict()
 
@@ -24,6 +25,7 @@ def convert_kg2id(datapath):
         array = line.strip().split("\t")
         relation2id[array[0]] = array[1]
 
+
     tmp_list = []
     for line in testdata2id_file:
         array = line.strip().split("\t")
@@ -33,9 +35,14 @@ def convert_kg2id(datapath):
         tailid = entity2id[array[1]]
         relationid = relation2id[array[2]]
         tmp_list.append([headid, tailid, relationid])
-
     kg_np = np.array(tmp_list)
     n_head = len(set(kg_np[:, 0]))
     n_tail = len(set(kg_np[:, 1]))
     n_relation = len(set(kg_np[:, 2]))
+
+    print("there is {} entity".format(n_head + n_tail))
+    print("the relation number is: {}".format(n_relation))
     return kg_np, n_head, n_tail, n_relation
+
+
+
